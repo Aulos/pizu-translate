@@ -71,7 +71,7 @@
         });
 
         PolymerExpressions.prototype.pizuTranslate = function(str) {
-            if( language_ && language_ != '' && translations_[language_][str] ) {
+            if( translations_[language_] && translations_[language_][str] ) {
                 return translations_[language_][str];
             } else {
                 return str;
