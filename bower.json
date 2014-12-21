@@ -1,0 +1,30 @@
+{
+  "name": "pizu-translate",
+  "version": "0.0.1",
+  "authors": [
+    "PiZu <paw.zubr@gmail.com>"
+  ],
+  "description": "Translate component for polymer applications",
+  "moduleType": [
+    "es6",
+    "globals"
+  ],
+  "keywords": [
+    "webcomponents",
+    "translate",
+    "polymer"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/Aulos/pizu-translate",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/Polymer#~0.5.2",
+    "core-ajax": "Polymer/core-ajax#~0.5.2"
+  }
+}

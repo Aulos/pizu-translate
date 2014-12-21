@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title>pizu-translate</title>
+
+        <script src="../polymer/polymer.js"></script>
+        <link rel="import" href="pizu-translate.html">
+
+    </head>
+    <body>
+        <div>
+            <template is="auto-binding">
+
+                <pizu-translate lang="{{lang}}" translations="{{translations}}"></pizu-translate>
+                <select value="{{lang}}">
+                    <option value="en">English</option>
+                    <option value="pl">Polish</option>
+                </select>
+                <p>Translation of 'chicken' id to "{{lang}}": "{{'chicken' | pizuTranslate}}".</p>
+
+            </template>
+        </div>
+
+        <script>
+            var t = document.querySelector('template');
+            t.lang = 'en';
+            t.translations = {
+                'en' : {
+                    'chicken' : 'chicken'
+                },
+                'pl' : {
+                    'chicken' : 'kurczak'
+                }
+            };
+        </script>
+    </body>
+</html>

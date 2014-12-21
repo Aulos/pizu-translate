@@ -1,0 +1,82 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../core-ajax/core-ajax.html">
+
+<polymer-element name="pizu-translate" attributes="lang translations translations-file-prefix translations-file-sufix" constructor="pizuTranslate" hidden>
+<template>
+    <core-ajax id="loader" 
+        handleAs="json"
+        on-core-response="{{handleResponse}}"
+        on-core-error="{{handleError}}"></core-ajax>
+</template>
+<script>
+    (function() {
+        var language_ = '';
+        /* variable translations_ in format:
+          {
+              'en': {
+                  'id1': 'enTranslationOfId1',
+                  'id2': 'enTranslationOfId2'
+              },
+              'pl': {
+                  'id1': 'plTranslationOfId1',
+                  'id2': 'plTranslationOfId2'
+              },
+              ...
+          }
+          */
+        var translations_ = {};
+
+        // little modified code from underscore.js library:
+        var extend_ = function(obj, src) {
+            for(var prop in src) {
+                if(hasOwnProperty.call(src, prop)) {
+                    obj[prop] = src[prop];
+                }
+            }
+            return  obj;
+        };
+
+        Polymer({
+            lang: '',
+            translations: {},
+            'translations-file-prefix': '',
+            'translations-file-sufix': '',
+            ready: function() {
+                if(this.lang == '') {
+                    console.warn('Language not set!');
+                    return;
+                } else {
+                    language_ = this.lang;
+                }
+
+                extend_(translations_, this.translations);
+
+                this.reloadFiles_();
+                this.langChanged = this.reloadFiles_;
+            },
+            reloadFiles_: function() {
+                // check is translations-file-prefix or translations-file-sufix is set
+                if(this['translations-file-sufix'] !== '' || this['translations-file-sufix'] !== '') {
+                    this.$.loader.url = this['translations-file-prefix'] + language_ + this['translations-file-sufix'];
+                    this.$.loader.go();
+                }
+            },
+            handleResponse: function(e) {
+                if(!translations_[language_]) translations_[language_] = {};
+                extend_(translations_[language_], e.response);
+            },
+            handleError: function(e) {
+                console.warn('Couldn\' get translation file for language', language_, '!');
+            },
+        });
+
+        PolymerExpressions.prototype.pizuTranslate = function(str) {
+            if( language_ && language_ != '' && translations_[language_][str] ) {
+                return translations_[language_][str];
+            } else {
+                return str;
+            }
+        };
+    })();
+</script>
+</polymer-element>
